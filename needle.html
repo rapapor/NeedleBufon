@@ -1,0 +1,82 @@
+<!Doctype>
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<title></title>
+</head>
+<body>
+
+<p id="ilosc_przeciec"></p>
+<p id="liczbapi"></p>
+
+<button  oNclick="obliczPi()">klik</button>
+
+<script type="text/javascript">
+	var max_random_x = 80;
+	var max_random_y = 90;
+//linia 1 	 
+	var linia1_y = 30;
+//linia 2	 
+	var linia2_y = 60;
+//dane igly
+	var dl_igly = 20; 
+	var punkt_x1_igly; //random
+	var punkt_y1_igly; //random
+	var punkt_x2_igly;
+	var punkt_y2_igly;
+	var kat_igly; 	  //random
+	var count =0;
+	var Pi =0;
+	var liczba_pow = 0;
+
+function randNeedle(){
+
+	punkt_x1_igly = Math.floor(Math.random() * max_random_x);
+	punkt_y1_igly = Math.floor(Math.random() * max_random_y);
+	kat_igly = Math.floor(Math.random() * 360);
+	punkt_x2_igly = dl_igly * Math.cos(kat_igly) + punkt_x1_igly;
+	punkt_y2_igly = dl_igly * Math.sin(kat_igly) + punkt_y1_igly;
+	if ((punkt_x2_igly > max_random_x) || (punkt_x2_igly <= 0) || (punkt_y2_igly > max_random_y) || punkt_y2_igly <=0 ) {
+		randNeedle();
+	}
+
+
+	$("#ilosc_przeciec").html("y_2: "+punkt_y2_igly + "<br> y_1:"+ punkt_y1_igly);	
+	}	
+
+
+
+function checkB(){
+	randNeedle()
+
+if((punkt_y1_igly > (linia1_y - dl_igly)) && (punkt_y2_igly < (linia1_y + dl_igly))){
+   count++;
+}else if((punkt_y2_igly > (linia1_y - dl_igly)) && (punkt_y1_igly < (linia1_y + dl_igly))){
+    count++;
+}else if((punkt_y1_igly > (linia2_y - dl_igly)) && (punkt_y2_igly < (linia2_y + dl_igly))){
+	 count++;
+}else if((punkt_y2_igly > (linia2_y - dl_igly)) && (punkt_y1_igly < (linia2_y + dl_igly))){
+    count++;
+  }
+  else{
+  	count = count;
+  }
+  liczba_pow++
+}
+
+
+function obliczPi(){
+	checkB()
+Pi = (2 * dl_igly * liczba_pow)/ ((linia2_y - linia1_y)*count);
+$("#liczbapi").html("Liczba PI = "+ Pi + "<br>" + "licznik powtorzen: " + liczba_pow + "<br> Count: " + count);
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>
